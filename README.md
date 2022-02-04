@@ -1,16 +1,71 @@
-# trabprat_IoT_2022
-Projeto de aplicação prática de IoT.  Referente à disciplina IoT IC/UFF.
+# IoT 2022 - Project
 
-Instruções para executar o projeto:
-1 - Usamos o celular como dispositivo IoT.  Instalar o aplicativo sensor IMU+GPS-stream. Entrar com o IP da máquina. Usar a opção UDP Stream.
-2 - Verificar se o computador e o celular estão na mesma rede wifi e verificar que não há bloqueio do firewall.
-3 - Os dados enviados pelo IMU+GPS estão no formato string.  O código python (gateway simulado) separa os dados da hora e do acelerômetro.
-4 - Usamos o broker HIVEMQ.  O Gateway envia os dados para o servidor MQTT. Código python main6.py simula o gateway.
-5. Rodar o gateway - código python main6.py
-6 - Para fazer o monitoramento via dashboard é necessária a instalação do freamework Fastapi e do servidor unvicorn.
-7 - Dashboard - utilizar o código main.py da pasta dashboard.  Executar: uvicorn main:app --reload  (servidor tipo apache).
-8 - As informações em formato JSON estarão disponíveis em http://127.0.0.1:8000/getdata
-Abrir o socket HIVEMQ http://www.hivemq.com/demos/websocket-client/  
-fazer o login com a conta iot2022/estudante21
-9 - O grafana pode ser acessado em http://192.168.0.29:3000/login
-10 - Irá observar que ao variar as posições do celular, os sensores enviarão novas informações. Alertas serão exibidos no dashboard.  Emails serão disparados aos gestores caso os dados de pressão e temperatura desviem muito de seus valores padrões.
+## IoT Device
+
+We are using as our IoT data source an Android Phone with the app **Sensorstream IMU+GPS**
+ (https://play.google.com/store/apps/details?id=de.lorenz_fenster.sensorstreamgps) installed.
+
+![APP](img/app.png "Sensorstream IMU+GPS")
+
+This application allows the user to collect data from the sensor present in the smartphone and send the data 
+collect via UDP to a Gateway.
+
+The Gateway will receive the data and execute the logic, go store the data or execute another business logic.
+
+## Python Gateway
+
+### Python Virtual Environment
+
+We will use a Python Virtual Environment to not messing up with the entire OS files. 
+
+```shell
+python3 -m venv venv
+```
+
+Use the virtual environment.
+
+```shell
+source ./venv/bin/activate
+```
+
+Tip: For leaving the virtual environment type 
+
+```shell
+deactivate
+```
+
+## Install Dependencies
+
+For installing the dependencies
+
+```shell
+sudo python3 -m pip install -r requirements.txt
+```
+#### Paho MQTT
+
+Eclipse Paho MQTT Python is a client library which implements versions 5.0, 3.1.1, and 3.1 of the MQTT protocol.
+
+https://github.com/eclipse/paho.mqtt.python/tree/master/examples
+
+### The Objectives
+
+1. Receive the data produced by an IoT device
+2. Store the data in an MQTT Server hosted in the cloud
+3. Read the data and take some action
+
+### Reference Architecture Used in This Project
+
+![Architecture](img/arch.png "IoT Architecture")
+
+```
+ALEXAKOS, Christos et al. Building an industrial IoT infrastructure with open source software for smart energy. In: 2019 First International Conference on Societal Automation (SA). IEEE, 2019. p. 1-8.
+```
+
+# Tips
+
+1. When the phone enters in sleep mode the data stream stopping
+
+# Extra Examples Using**Sensorstream IMU+GPS** 
+
+1. https://github.com/chanlhock/IMU/blob/master/imu.py
+2. https://github.com/olliematthews/phone_animation/blob/master/run.py

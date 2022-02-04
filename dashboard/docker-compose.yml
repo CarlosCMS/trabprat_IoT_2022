@@ -1,0 +1,22 @@
+version: '3'
+volumes:
+  grafana_data: {}
+  grafana_plugins: {}
+services:
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana_iot2022
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+      - grafana_plugins:/var/lib/grafana/plugins
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_PANELS_DISABLE_SANITIZE_HTML=true
+      - GF_INSTALL_PLUGINS=yesoreyeram-infinity-datasource
+    restart: always
+    expose:
+      - 3000
+    network_mode: "host"
